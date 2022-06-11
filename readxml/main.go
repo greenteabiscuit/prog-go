@@ -16,30 +16,15 @@ func main() {
 	}
 	xml, err := ioutil.ReadAll(fp)
 	doc := xmldom.Must(xmldom.ParseXML(string(xml)))
-	// fmt.Println(doc.Root)
-	// 再帰か、、
-	// interpreterのあれでコピる
-	/*
-		for _, child := range doc.Root.Children {
-			fmt.Println("===")
-			fmt.Println(child.Name)
-			fmt.Println(child.Text)
-			fmt.Println("===")
-		}
-	*/
 	head := doc.Root
 	stack := Stack{
 		arr: []string{head.Name},
 	}
-	// helper(head)
 	stack.helper(head)
-	/*
-		for _, item := range stack.arr {
-			fmt.Println(item)
-		}
-	*/
 
 	pointer := len(stack.arr) - 1
+
+	// スタックの中を操作するループ
 	for pointer > 0 {
 		n1, _ := strconv.ParseFloat(stack.arr[pointer], 64)
 		pointer--
@@ -58,12 +43,10 @@ func main() {
 			stack.arr[pointer] = strconv.FormatFloat(n2/n1, 'f', 2, 64)
 		}
 	}
-	// fmt.Println(stack.arr)
 	fmt.Println(stack.arr[0])
 }
 
-// こっからはあのコンパイラと同じ、はず
-
+// stackの構造体
 type Stack struct {
 	arr []string
 }
@@ -85,19 +68,3 @@ func (s *Stack) helper(head *xmldom.Node) {
 		s.helper(child)
 	}
 }
-
-// define a stack and process it?
-
-/*
-func helper(head *xmldom.Node) {
-	if head == nil {
-		return
-	}
-	for _, child := range head.Children {
-		fmt.Println("===")
-		fmt.Println(child.Name)
-		fmt.Println(child.Text)
-		helper(child)
-	}
-}
-*/
