@@ -1,1 +1,6 @@
-<num xmlns="https://expr.com">-1.625</num>
+<minus xmlns="https://expr.com">
+ <minus>
+  <num>2.1875</num>
+  <num>-0.25</num>
+ </minus>
+</minus>

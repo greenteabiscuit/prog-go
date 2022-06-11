@@ -39,23 +39,28 @@ func main() {
 	for pointer > 0 {
 		n1, _ := strconv.ParseFloat(stack.arr[pointer], 64)
 		pointer--
-		n2, _ := strconv.ParseFloat(stack.arr[pointer], 64)
-		pointer--
-		sign := stack.arr[pointer]
+		// check if minus
+		if stack.arr[pointer] == "minus" {
+			stack.arr[pointer] = strconv.FormatFloat(-n1, 'f', 6, 64)
+		} else {
+			n2, _ := strconv.ParseFloat(stack.arr[pointer], 64)
+			pointer--
+			sign := stack.arr[pointer]
 
-		switch sign {
-		case "plus":
-			stack.arr[pointer] = strconv.FormatFloat(n2+n1, 'f', 2, 64)
-		case "minus":
-			stack.arr[pointer] = strconv.FormatFloat(n2-n1, 'f', 2, 64)
-		case "mul":
-			stack.arr[pointer] = strconv.FormatFloat(n2*n1, 'f', 2, 64)
-		case "div":
-			stack.arr[pointer] = strconv.FormatFloat(n2/n1, 'f', 2, 64)
+			switch sign {
+			case "plus":
+				stack.arr[pointer] = strconv.FormatFloat(n1+n2, 'f', 6, 64)
+			case "minus":
+				stack.arr[pointer] = strconv.FormatFloat(n1-n2, 'f', 6, 64)
+			case "mul":
+				stack.arr[pointer] = strconv.FormatFloat(n1*n2, 'f', 6, 64)
+			case "div":
+				stack.arr[pointer] = strconv.FormatFloat(n2/n1, 'f', 6, 64)
+			}
 		}
 	}
 	ans, _ := strconv.ParseFloat(stack.arr[0], 64)
-	fmt.Printf("%.6f\n", ans)
+	fmt.Println(ans)
 }
 
 // stackの構造体
