@@ -1,6 +1,15 @@
-<minus xmlns="https://expr.com">
- <minus>
-  <num>2.1875</num>
-  <num>-0.25</num>
- </minus>
-</minus>
+<plus>
+  <num>1</num>
+  <mul>
+    <num>2</num>
+    <num>3</num>
+  </mul>
+  <div>
+    <num>4</num>
+    <num>5</num>
+  </div>
+  <minus>
+    <num>6</num>
+    <num>7</num>
+  </minus>
+</plus>
