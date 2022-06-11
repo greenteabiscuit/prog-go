@@ -40,7 +40,48 @@ func main() {
 
 	exp := p.parseExpression(head)
 	fmt.Println(exp.String())
-	fmt.Println(exp.Float())
+	//fmt.Println(exp.Float())
+	ans := Eval(exp)
+	fmt.Println(ans.Float())
+}
+
+type FloatObj struct {
+	Value float64
+}
+
+func (i *FloatObj) Float() float64 {
+	return i.Value
+}
+
+func (i *FloatObj) String() string {
+	return ""
+}
+
+func Eval(exp Expression) Expression {
+	switch node := exp.(type) {
+	case *InfixExpression:
+		left := Eval(node.Left)
+		right := Eval(node.Right)
+		fmt.Println(left.Float())
+		fmt.Println(right.Float())
+		leftVal := left.(*FloatObj).Value
+		rightVal := right.(*FloatObj).Value
+		switch node.Token {
+		case "plus":
+			return &FloatObj{Value: leftVal + rightVal}
+		case "minus":
+			return &FloatObj{Value: leftVal - rightVal}
+		case "mul":
+			return &FloatObj{Value: leftVal * rightVal}
+		case "div":
+			return &FloatObj{Value: leftVal / rightVal}
+		}
+	case *FloatLiteral:
+		return &FloatObj{Value: node.Value}
+	default:
+		fmt.Println("failure")
+	}
+	return nil
 }
 
 type Parser struct {
@@ -49,7 +90,7 @@ type Parser struct {
 func (p *Parser) parseExpression(head *xmldom.Node) Expression {
 	if head.Name == "num" {
 		n1, _ := strconv.ParseFloat(head.Text, 64)
-		return &IntegerLiteral{Value: n1}
+		return &FloatLiteral{Value: n1}
 	}
 	sign := head.Name
 
@@ -70,14 +111,12 @@ func (p *Parser) parseExpression(head *xmldom.Node) Expression {
 }
 
 type Node interface {
-	TokenLiteral() string
 	String() string
 	Float() float64
 }
 
 type Expression interface {
 	Node
-	expressionNode()
 }
 
 type InfixExpression struct {
@@ -86,20 +125,16 @@ type InfixExpression struct {
 	Right Expression
 }
 
-type IntegerLiteral struct {
+type FloatLiteral struct {
 	Value float64
 }
 
-func (il *IntegerLiteral) expressionNode()      {}
-func (il *IntegerLiteral) TokenLiteral() string { return "" }
-func (il *IntegerLiteral) String() string {
+func (il *FloatLiteral) String() string {
 	return strconv.FormatFloat(il.Value, 'f', 6, 64)
 }
-func (il *IntegerLiteral) Float() float64 { return il.Value }
+func (il *FloatLiteral) Float() float64 { return il.Value }
 
-func (ie *InfixExpression) expressionNode()      {}
-func (ie *InfixExpression) TokenLiteral() string { return ie.Token }
-func (ie *InfixExpression) Float() float64       { return 0 }
+func (ie *InfixExpression) Float() float64 { return 0 }
 func (ie *InfixExpression) String() string {
 	var out bytes.Buffer
 
