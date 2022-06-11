@@ -33,9 +33,11 @@ func main() {
 	}
 	// helper(head)
 	stack.helper(head)
-	for _, item := range stack.arr {
-		fmt.Println(item)
-	}
+	/*
+		for _, item := range stack.arr {
+			fmt.Println(item)
+		}
+	*/
 
 	pointer := len(stack.arr) - 1
 	for pointer > 0 {
@@ -56,7 +58,8 @@ func main() {
 			stack.arr[pointer] = strconv.FormatFloat(n2/n1, 'f', 2, 64)
 		}
 	}
-	fmt.Println(stack.arr)
+	// fmt.Println(stack.arr)
+	fmt.Println(stack.arr[0])
 }
 
 // こっからはあのコンパイラと同じ、はず
