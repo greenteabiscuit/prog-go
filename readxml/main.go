@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -10,7 +11,9 @@ import (
 )
 
 func main() {
-	fp, err := os.Open("./a.xml")
+	flag.Parse()
+	filename := flag.Args()[0]
+	fp, err := os.Open(filename)
 	if err != nil {
 		panic(err)
 	}
@@ -51,7 +54,8 @@ func main() {
 			stack.arr[pointer] = strconv.FormatFloat(n2/n1, 'f', 2, 64)
 		}
 	}
-	fmt.Println(stack.arr[0])
+	ans, _ := strconv.ParseFloat(stack.arr[0], 64)
+	fmt.Printf("%.6f\n", ans)
 }
 
 // stackの構造体
