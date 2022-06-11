@@ -40,7 +40,7 @@ func main() {
 	p := &Parser{}
 
 	exp := p.parseExpression(head)
-	// fmt.Println(exp.String())
+	fmt.Println(exp.String())
 	//fmt.Println(exp.Float())
 	ans := Eval(exp)
 	fmt.Println(ans.Float())
@@ -147,6 +147,9 @@ func (il *FloatLiteral) Float() float64 { return il.Value }
 
 func (ie *InfixExpression) Float() float64 { return 0 }
 func (ie *InfixExpression) String() string {
+	// below is fine too, honestly dont know why they used bytes.Buffer
+	// return fmt.Sprintf("(%s %s %s)", ie.Left.String(), ie.Token, ie.Right.String())
+
 	var out bytes.Buffer
 
 	out.WriteString("(")
