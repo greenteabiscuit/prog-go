@@ -1,0 +1,9 @@
+<minus xmlns="https://expr.com">
+    <num>-0.25</num>
+    <num>-0.25</num>
+    <num>-0.25</num>
+    <mul>
+        <num>3</num>
+        <num>4</num>
+    </mul>
+</minus>
