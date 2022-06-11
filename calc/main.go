@@ -30,16 +30,17 @@ func main() {
 
 	for {
 		// one of mul, sub, add, div
-		if head.Name != "num" && len(head.Children) == 1 {
+		if head.Name == "num" || len(head.Children) == 1 {
 			head = head.Children[0]
+		} else {
+			break
 		}
-		break
 	}
 
 	p := &Parser{}
 
 	exp := p.parseExpression(head)
-	fmt.Println(exp.String())
+	// fmt.Println(exp.String())
 	//fmt.Println(exp.Float())
 	ans := Eval(exp)
 	fmt.Println(ans.Float())
@@ -62,8 +63,8 @@ func Eval(exp Expression) Expression {
 	case *InfixExpression:
 		left := Eval(node.Left)
 		right := Eval(node.Right)
-		fmt.Println(left.Float())
-		fmt.Println(right.Float())
+		// fmt.Println(left.Float())
+		// fmt.Println(right.Float())
 		leftVal := left.(*FloatObj).Value
 		rightVal := right.(*FloatObj).Value
 		switch node.Token {
