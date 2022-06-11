@@ -17,8 +17,16 @@ func main() {
 	xml, err := ioutil.ReadAll(fp)
 	doc := xmldom.Must(xmldom.ParseXML(string(xml)))
 	head := doc.Root
-	stack := Stack{
-		arr: []string{head.Name},
+	// edge case if head is num
+	var stack Stack
+	if head.Name == "num" {
+		stack = Stack{
+			arr: []string{head.Text},
+		}
+	} else {
+		stack = Stack{
+			arr: []string{head.Name},
+		}
 	}
 	stack.helper(head)
 
