@@ -93,6 +93,16 @@ func (p *Parser) parseExpression(head *xmldom.Node) Expression {
 		n1, _ := strconv.ParseFloat(head.Text, 64)
 		return &FloatLiteral{Value: n1}
 	}
+
+	for {
+		// one of mul, sub, add, div
+		if head.Name == "num" || len(head.Children) == 1 {
+			head = head.Children[0]
+		} else {
+			break
+		}
+	}
+
 	sign := head.Name
 
 	expression := &InfixExpression{
